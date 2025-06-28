@@ -5,15 +5,6 @@ the `recscreener` application.
 
 ## Getting Started
 
-### Prerequisites
-
-- pipx 1.7.1 or later
-- poetry 2.1.3 or later
-- pylint 3.3.7 or later
-- python3 3.13.0 or later
-- pytest 8.3.4 or later
-- IDE (e.g., PyCharm)
-
 ## Setting Up Shell Development Environment
 
 Following instructions are for `macOS UNIX`:
