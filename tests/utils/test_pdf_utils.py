@@ -1,8 +1,8 @@
-import pytest
 import os
 
-from pathlib import Path
+import pytest
 from fpdf import FPDF
+
 from rescreener.utils.pdf_utils import pdf_to_text
 
 PDF_FILE="example.pdf"

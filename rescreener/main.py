@@ -2,12 +2,18 @@
 import argparse
 import sys
 
+from fastapi import FastAPI
+
+from rescreener.api import routes
 from rescreener.utils.pyproject import PRG, DESCRIPTION, VERSION
 
-# ------------------------------------------------------------------------------
-# --------------->>> parse_args <<<---------------------------------------------
-# ------------------------------------------------------------------------------
-def main_parse_args(args: list) -> list:
+app = FastAPI()
+app.include_router(routes.router)
+
+__all__ = ['app', 'main']
+
+
+def _parse_args(args: list) -> list:
     """Parse command line arguments."""
     # ---------- >>> parse CLI options <<< -------------------------------------
     parser = argparse.ArgumentParser(prog=PRG,
@@ -30,7 +36,7 @@ def main_parse_args(args: list) -> list:
 # ------------------------------------------------------------------------------
 def main(args=sys.argv[1:]) -> None:
     """The application bootstrap main function."""
-    args = main_parse_args(args)
+    args = _parse_args(args)
     print("Hello World")
 
 if __name__ == '__main__':
