@@ -1,4 +1,4 @@
-"""rescreener bootstrap main module"""
+"""A module to bootstrap the rescreener application."""
 import argparse
 import sys
 
@@ -7,20 +7,13 @@ from fastapi import FastAPI
 from rescreener.api import routes
 from rescreener.utils.pyproject import PRG, DESCRIPTION, VERSION
 
-app = FastAPI()
-app.include_router(routes.router)
-
-__all__ = ['app', 'main']
-
+__all__ = ['main']
 
 def _parse_args(args: list) -> list:
     """Parse command line arguments."""
     # ---------- >>> parse CLI options <<< -------------------------------------
     parser = argparse.ArgumentParser(prog=PRG,
                                      description=DESCRIPTION)
-    parser.add_argument('-t', '--testing',
-                        action='store_true',
-                        help='run application in testing mode')
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='run application in debug mode')
@@ -37,7 +30,13 @@ def _parse_args(args: list) -> list:
 def main(args=sys.argv[1:]) -> None:
     """The application bootstrap main function."""
     args = _parse_args(args)
-    print("Hello World")
+
+    if args.debug:
+        # TODO run FastAPI in debug mode
+        print('running in debug mode')
+
+    app = FastAPI()
+    app.include_router(routes.router)
 
 if __name__ == '__main__':
     main()

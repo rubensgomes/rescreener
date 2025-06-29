@@ -15,7 +15,8 @@ dependencies = [
     "fastapi (>=0.115.14)",
     "PyPDF2 (>=3.0.1)",
     "spacy (>=3.8.7,<4.0.0)",
-    "python-multipart (>=0.0.20,<0.0.21)"
+    "python-multipart (>=0.0.20,<0.0.21)",
+    "aiofiles (>=24.1.0,<25.0.0)"
 ]
 
 [tool.poetry]

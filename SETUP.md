@@ -26,14 +26,8 @@ Following instructions are for `macOS UNIX`:
     pipx inject poetry poetry-plugin-shell
     ```
 
-3. Upgrade `poetry` and update dependencies
-
-- to upgrade `poetry`:
-
-    ```shell
-    pipx upgrade poetry
-  ```
-  
+3. Update dependencies
+ 
 - to get latest versions of dependencies and to update `poetry.lock`:
 
     ```shell
@@ -72,6 +66,24 @@ environments.
     cd $(git rev-parse --show-toplevel) || exit
     poetry shell
     ```
+
+## Linting the Code
+
+   ```shell
+   cd $(git rev-parse --show-toplevel) || exit
+   poetry run pylint rescreener
+   ```
+
+## Running the Unit Tests with Coverage
+
+   ```shell
+   cd $(git rev-parse --show-toplevel) || exit
+   # run pytest with coverage
+   poetry run python -m coverage run -m pytest tests/
+   # generate coverage report
+   poetry run python -m coverage report -m
+   ```
+
 
 ## Clean Shell Environment
 
@@ -114,23 +126,6 @@ environments.
     ```shell
     poetry env info
     ```
-
-## Linting the Code
-
-   ```shell
-   cd $(git rev-parse --show-toplevel) || exit
-   poetry run pylint rescreener
-   ```
-
-## Running the Unit Tests with Coverage
-
-   ```shell
-   cd $(git rev-parse --show-toplevel) || exit
-   # run pytest with coverage
-   poetry run python -m coverage run -m pytest tests/
-   # generate coverage report
-   poetry run python -m coverage report -m
-   ```
 
 ## Running the main program
 
