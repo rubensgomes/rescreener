@@ -38,11 +38,6 @@ Following instructions are for `macOS UNIX`:
 
     ```shell
     poetry update -vvv
-    ```
-
-- to update `poetry.lock` after changes to `pyproject.toml`:
-
-    ```shell
     poetry lock --regenerate -vv
     ```
 
@@ -136,4 +131,13 @@ environments.
    # generate coverage report
    poetry run python -m coverage report -m
    ```
-   
+
+## Running the main program
+
+- To display the program version:
+
+    ```shell
+    PYTHONPATH="$(git rev-parse --show-toplevel)"
+    export PYTHONPATH
+    python3 rescreener/main.py --version
+    ```

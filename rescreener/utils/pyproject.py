@@ -1,4 +1,4 @@
-"""module with supporting pyproject.toml.functions."""
+"""A module with supporting pyproject.toml.functions."""
 
 import tomllib
 from pathlib import Path

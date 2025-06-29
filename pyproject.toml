@@ -13,7 +13,7 @@ repository = "https://github.com/rubensgomes/rescreener/"
 requires-python = ">=3.13,<3.14"
 dependencies = [
     "fastapi (>=0.115.14)",
-    "pypdf (>=5.6.1)",
+    "PyPDF2 (>=3.0.1)",
     "spacy (>=3.8.7,<4.0.0)"
 ]
 
@@ -27,6 +27,7 @@ packages = [
 coverage = "^7.9.1"
 pytest = "^8.4.1"
 pytest-mock = "^3.14.1"
+fpdf = "^1.7.2"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

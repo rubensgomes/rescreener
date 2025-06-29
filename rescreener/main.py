@@ -1,7 +1,8 @@
+"""rescreener bootstrap main module"""
 import argparse
 import sys
 
-from rescreener.utils.definitions import PRG, DESCRIPTION, VERSION
+from rescreener.utils.pyproject import PRG, DESCRIPTION, VERSION
 
 # ------------------------------------------------------------------------------
 # --------------->>> parse_args <<<---------------------------------------------
@@ -30,5 +31,7 @@ def main_parse_args(args: list) -> list:
 def main(args=sys.argv[1:]) -> None:
     """The application bootstrap main function."""
     args = main_parse_args(args)
-
     print("Hello World")
+
+if __name__ == '__main__':
+    main()
