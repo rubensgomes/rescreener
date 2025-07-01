@@ -1,4 +1,5 @@
-from rescreener.utils.pyproject import *
+from rescreener.utils.pyproject_utils import *
+
 
 def test_succeed_get_pyproject_toml():
     toml = get_pyproject_toml()

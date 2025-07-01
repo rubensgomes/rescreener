@@ -1,14 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="auto">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>My Flask/Django App</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma"
+          content="no-cache">
+    <meta http-equiv="Expires"
+          content="0">
+
+    <!-- Extra meta tags -->
+    <meta name="description"
+          content="Resume Screener">
+    <meta name="author"
+          content="Rubens Gomes">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <title>Resume Screener App</title>
 </head>
-<body>
-<div class="container">
-    <h1>Hello, Bootstrap!</h1>
-</div>
+
+<body id="home-id"
+      data-bs-spy="scroll"
+      data-bs-target="#navbar-menu"
+      data-bs-offset="62">
+
+<header>
+    <!-- Navigation Menu  -->
+    <nav id="navbar-menu"
+         class="navbar navbar-dark bg-dark border-3 border-top border-complement
+          navbar-expand-md fixed-top o-md-90">
+        <div class="container">
+            <a class="navbar-brand"
+               href="#home-id">Resume Screener</a>
+        </div>
+    </nav>
+</header>
+
+<noscript>
+    <div class="fixed-top mt-7 fw-bold alert alert-danger"
+         role="alert">
+        Seu navegador não possui Javascript habilitado. Esta página não funciona
+        corretamente sem Javascript. Veja <a class="link-primary"
+                                             href="https://www.enable-javascript.com/"
+                                             rel="external">instruções</a> para
+        habilitar Javascript.
+    </div>
+</noscript>
+
+<main>
+    <!-- Upload PDF resume -->
+    <section class="section bg-dark-600"
+             id="resume-id">
+        <hr>
+
+        <div class="container mt-5">
+            <h2 class="mb-4">Upload resume and job description.</h2>
+            <form action="/upload-files" method="POST" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="resume_file" class="d-block form-label">Resume PDF file (max size 10 MBytes):</label>
+                    <input class="form-control-file" type="file" id="resume_file" name="pdf_file" placeholder="resume.pdf" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="jd_file" class="d-block form-label">Job description TXT file (mzx size 10 MBytes):</label>
+                    <input class="form-control-file" type="file" id="jd_file" name="txt_file" placeholder="jd.txt" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+
+    </section>
+</main>
+
+<footer class="py-5 bg-dark-900">
+    <div class="container copyright">
+        <div class="row">
+            <div class="text-nowrap">
+                © 2025&nbsp;<a class="ext-link-noimg"
+                               href="https://rubensgomes.com/">Rubens Gomes</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

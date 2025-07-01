@@ -1,13 +1,19 @@
 """A module to bootstrap the rescreener application."""
+
 import argparse
 import sys
 
+import uvicorn
 from fastapi import FastAPI
 
 from rescreener.api import routes
-from rescreener.utils.pyproject import PRG, DESCRIPTION, VERSION
+from rescreener.utils.pyproject_utils import PRG, DESCRIPTION, VERSION
 
-__all__ = ['main']
+__all__ = ['app', 'main']
+
+app = FastAPI()
+app.include_router(routes.router)
+
 
 def _parse_args(args: list) -> list:
     """Parse command line arguments."""
@@ -22,7 +28,9 @@ def _parse_args(args: list) -> list:
                         help='display version information',
                         version='%(prog)s ' + VERSION)
     # reads default args from sys.argv
-    return parser.parse_args(args)
+    args = parser.parse_args(args)
+    return args
+
 
 # ------------------------------------------------------------------------------
 # --------------->>> start <<<---------------------------------------------------
@@ -31,12 +39,11 @@ def main(args=sys.argv[1:]) -> None:
     """The application bootstrap main function."""
     args = _parse_args(args)
 
-    if args.debug:
-        # TODO run FastAPI in debug mode
-        print('running in debug mode')
+    # only run if block when NOT running unit test
+    if 'unittest' not in sys.modules:
+        if args.debug:
+            uvicorn.run(app, host="127.0.0.1", port=8080)
 
-    app = FastAPI()
-    app.include_router(routes.router)
 
 if __name__ == '__main__':
     main()

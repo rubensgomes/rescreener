@@ -3,39 +3,39 @@
 This page contains information to setup your development environment for 
 the `recscreener` application.
 
-## Getting Started
-
-## Setting Up Shell Development Environment
+## Installation and Updates
 
 Following instructions are for `macOS UNIX`:
 
-1. Ensure python3, and pipx are installed:
+1. Install required tools
 
     ```shell
     brew install python3
     brew install pipx
     pipx ensurepath
-    ```
-
-2. Install `pylint`, `poetry`, and `poetry-plugin-shell`  using `pipx`
-
-    ```shell
     pipx install pylint
     pipx install poetry
     # notice that the poetry-plugin-shell needs to be injected
     pipx inject poetry poetry-plugin-shell
+    pipx install "fastapi[standard]"
+    # to install any new application dependencies
+    # poetry add python-multipart
+    # to install any new development dependencies
+    # poetry add --dev httpx
     ```
 
-3. Update dependencies
+2. Update dependencies
  
-- to get latest versions of dependencies and to update `poetry.lock`:
-
     ```shell
+    poetry self update
+    poetry self add poetry-plugin-up
     poetry update -vvv
+    poetry up --only=dev --latest
+    poetry up --latest
     poetry lock --regenerate -vv
     ```
 
-## Creating Shell Python Virtual Environment
+## Python Virtual Environment
 
 As per [PEP 668](https://peps.python.org/pep-0668/) starting with Python 3.12,
 non-brew-packaged Python package should only be installed in virtual
@@ -50,15 +50,11 @@ environments.
     poetry lock --regenerate -vv
     poetry build
     poetry install
-    ```
-
-2. To display information about the virtual environment:
-
-    ```shell
+    # display information about virtual environment 
     poetry env info
     ```
 
-3. Open a shell within virtual environment using `poetry`:
+2. Open a shell within virtual environment using `poetry`:
 
     ```shell
     # Ensure at the top of the project root folder
@@ -67,23 +63,24 @@ environments.
     poetry shell
     ```
 
-## Linting the Code
+## Linting and Unit Testing
 
    ```shell
    cd $(git rev-parse --show-toplevel) || exit
-   poetry run pylint rescreener
-   ```
-
-## Running the Unit Tests with Coverage
-
-   ```shell
-   cd $(git rev-parse --show-toplevel) || exit
+   poetry run pylint rescreener || {
+     printf "failed pylint.\n" >&2
+     sleep 60
+     exit
+   }
    # run pytest with coverage
-   poetry run python -m coverage run -m pytest tests/
+   poetry run python -m coverage run -m pytest tests/ || {
+     printf "failed unit testing.\n" >&2
+     sleep 10
+     exit
+   }
    # generate coverage report
    poetry run python -m coverage report -m
    ```
-
 
 ## Clean Shell Environment
 
@@ -103,7 +100,30 @@ environments.
     rm -fr .venv/
     ```
 
-## Setting Up PyCharm IDE Development Environment
+## Running the main program
+
+- To display the program version:
+
+    ```shell
+    PYTHONPATH="$(git rev-parse --show-toplevel)"
+    export PYTHONPATH
+    python3 rescreener/main.py --version
+    ```
+
+- To run using `fastapi`:
+
+    ```shell
+    # path to the application main.py file
+    MAIN_PATH="${HOME}/dev/pycharm/rescreener/rescreener"
+    cd "${MAIN_PATH}" || {
+      printf "%s not found.\n" "${MAIN_PATH}"
+      sleep 10
+      exit 1
+    }
+    fastapi dev --host "127.0.0.1" --port "8888" --reload "${MAIN_PATH}/main.py"
+    ```
+
+## PyCharm IDE Development Environment
 
 - First, ensure to follow all the previous steps to "Setting Up Shell
   Development Environment"
@@ -127,12 +147,3 @@ environments.
     poetry env info
     ```
 
-## Running the main program
-
-- To display the program version:
-
-    ```shell
-    PYTHONPATH="$(git rev-parse --show-toplevel)"
-    export PYTHONPATH
-    python3 rescreener/main.py --version
-    ```

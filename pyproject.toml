@@ -1,23 +1,46 @@
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [project]
 name = "rescreener"
 version = "0.1.0"
-keywords = ["AI", "ML", "NLP", "LLM"]
-description = "AI-Powered Resume Screener (Classification + NLP + LLM)"
+dependencies = [
+    "fastapi (>=0.115.14)",
+    "spacy (>=3.8.7,<4.0.0)",
+    "uvicorn (>=0.35.0,<0.36.0)",
+    "python-multipart (>=0.0.20,<0.0.21)",
+    "pypdf (>=5.7.0,<6.0.0)"
+]
+requires-python = ">=3.13,<3.14"
 authors = [
     { name = "Rubens Gomes", email = "rubens.s.gomes@gmail.com" }
 ]
-license = "Apache License Version 2.0"
-readme = "README.md"
-documentation = "https://github.com/rubensgomes/rescreener/docs/"
-repository = "https://github.com/rubensgomes/rescreener/"
-requires-python = ">=3.13,<3.14"
-dependencies = [
-    "fastapi (>=0.115.14)",
-    "PyPDF2 (>=3.0.1)",
-    "spacy (>=3.8.7,<4.0.0)",
-    "python-multipart (>=0.0.20,<0.0.21)",
-    "aiofiles (>=24.1.0,<25.0.0)"
+maintainers = [
+    { name = "Rubens Gomes", email = "rubens.s.gomes@gmail.com" }
 ]
+description = "AI-Powered Resume Screener (Classification + NLP + LLM)"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["AI", "ML", "NLP", "LLM"]
+classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 3 - Alpha",
+    # Indicate who your project is intended for
+    "Intended Audience :: General Publice",
+    "Topic :: Software Development :: Resume Screener",
+    # Specify the Python versions you support here.
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://todo"
+Documentation = "https://github.com/rubensgomes/rescreener/documents/"
+Repository = "https://github.com/rubensgomes/rescreener/"
 
 [tool.poetry]
 name = "rescreener"
@@ -30,11 +53,7 @@ coverage = "^7.9.1"
 pytest = "^8.4.1"
 pytest-mock = "^3.14.1"
 fpdf = "^1.7.2"
-pytest-asyncio = "^1.0.0"
-# do not use 0.28 as it causes unit test to fail.
-httpx = "0.27.2"
+httpx = "^0.28.1"
+fastapi = { extras = ["standard"], version = "^0.115.14" }
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
 

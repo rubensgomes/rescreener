@@ -1,8 +1,9 @@
 """A module of PDF utilities"""
 
-import PyPDF2
+import pypdf
 
 __all__ = ['pdf_to_text']
+
 
 def pdf_to_text(pdf_path: str, txt_path: str) -> None:
     """Converts a given input pdf_path file to an output txt_path text file.
@@ -15,7 +16,7 @@ def pdf_to_text(pdf_path: str, txt_path: str) -> None:
         None
     """
     with open(pdf_path, 'rb') as pdf_file:
-        reader = PyPDF2.PdfReader(pdf_file)
+        reader = pypdf.PdfReader(pdf_file)
         with open(txt_path, 'w', encoding='utf-8') as text_file:
             for page_num, page in enumerate(reader.pages):
                 text = page.extract_text()
