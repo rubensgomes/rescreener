@@ -2,24 +2,34 @@
 
 import argparse
 import sys
+from argparse import ArgumentParser
+from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from rescreener.api import routes
+from rescreener.config import Settings
+from rescreener.utils.file_utils import get_root_dir
 from rescreener.utils.pyproject_utils import PRG, DESCRIPTION, VERSION
 
 __all__ = ['app', 'main']
 
+settings = Settings()
+
 app = FastAPI()
+
+static_path: Path = Path(get_root_dir() / "static")
+app.mount("/static", StaticFiles(directory=static_path), name="static")
 app.include_router(routes.router)
 
 
-def _parse_args(args: list) -> list:
-    """Parse command line arguments."""
-    # ---------- >>> parse CLI options <<< -------------------------------------
-    parser = argparse.ArgumentParser(prog=PRG,
-                                     description=DESCRIPTION)
+def _setup_parser() -> ArgumentParser:
+    """Initialize parser with additional CLI options."""
+    parser: ArgumentParser = argparse.ArgumentParser(prog=PRG,
+                                                     description=DESCRIPTION)
+    # ---------- >>> Add CLI options <<< --------------------------------------
     parser.add_argument('-d', '--debug',
                         action='store_true',
                         help='run application in debug mode')
@@ -27,23 +37,30 @@ def _parse_args(args: list) -> list:
                         action='version',
                         help='display version information',
                         version='%(prog)s ' + VERSION)
-    # reads default args from sys.argv
-    args = parser.parse_args(args)
-    return args
+    return parser
 
 
-# ------------------------------------------------------------------------------
-# --------------->>> start <<<---------------------------------------------------
-# ------------------------------------------------------------------------------
-def main(args=sys.argv[1:]) -> None:
+# -----------------------------------------------------------------------------
+# --------------->>> start <<<-------------------------------------------------
+# NOTE: main() is NOT called when executing program using "fastapi" executor.
+# -----------------------------------------------------------------------------
+def main(argv: list[str] = sys.argv[1:]) -> None:
     """The application bootstrap main function."""
-    args = _parse_args(args)
+    parser: ArgumentParser = _setup_parser()
+    # process the input argv: could exit the application.
+    args: list[str] = parser.parse_args(argv)
 
-    # only run if block when NOT running unit test
-    if 'unittest' not in sys.modules:
-        if args.debug:
-            uvicorn.run(app, host="127.0.0.1", port=8080)
+    if args is not None:
+        print(f"Starting {PRG} with the following CLI options:", args)
+
+    # skip running application when unit testing
+    if 'unittest' in sys.modules:
+        print(f"Skipping {PRG} application startup in unit test mode.")
+        return None
+
+    # start the application
+    return uvicorn.run(app, host=settings.host, port=settings.port)
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

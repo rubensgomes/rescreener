@@ -32,7 +32,6 @@ def _save_upload_file(upload_file: UploadFile, destination: str) -> str:
         shutil.copyfileobj(upload_file.file, buffer)
     return filename
 
-
 @router.get("/", tags=["index"], response_class=HTMLResponse)
 async def index(request: Request) -> HTMLResponse:
     """Returns the HTML index page to the user.

@@ -107,7 +107,7 @@ environments.
     ```shell
     PYTHONPATH="$(git rev-parse --show-toplevel)"
     export PYTHONPATH
-    python3 rescreener/main.py --version
+    python3 rescreener/main.py
     ```
 
 - To run using `fastapi`:
